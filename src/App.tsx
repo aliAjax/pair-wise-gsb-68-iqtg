@@ -8,7 +8,7 @@ import { AuditArchive } from './views/AuditArchive'
 
 function Shell() {
   const reset = useClaimStore((state) => state.reset)
-  const review = useClaimStore((state) => state.claims.filter((item) => item.status === '待编辑复核').length)
+  const review = useClaimStore((state) => state.claims.filter((item) => item.status === '待编辑复核').length + state.corrections.filter((item) => item.status === '待编辑确认').length)
   return <Flex minH="100vh">
     <Box position="fixed" w="238px" inset="0 auto 0 0" bg="#17342f" color="white" px="4" py="5">
       <HStack borderBottomWidth="1px" borderColor="whiteAlpha.300" pb="5">
@@ -19,7 +19,7 @@ function Shell() {
         {[['/', '核查主张'], ['/reviews', '编辑复核'], ['/audit', '档案与审计']].map(([to, label]) => <NavLink key={to} to={to} end={to === '/'}><Flex px="3" py="2.5" borderRadius="4px" justify="space-between" fontSize="sm" color="whiteAlpha.700"><span>{label}</span>{label === '编辑复核' && review > 0 && <Badge colorScheme="red">{review}</Badge>}</Flex></NavLink>)}
       </VStack>
       <Box position="absolute" bottom="5" left="4" right="4" bg="blackAlpha.300" p="3">
-        <Text fontSize="xs" color="whiteAlpha.600">当前角色</Text><Text fontSize="sm" mt="1">事实核查员 陆衡</Text><Text fontSize="xs" color="whiteAlpha.500" mt="1">争议证据不得被覆盖</Text>
+        <Text fontSize="xs" color="whiteAlpha.600">当前角色</Text><Text fontSize="sm" mt="1">事实核查员 陆衡</Text><Text fontSize="xs" color="whiteAlpha.500" mt="1">来源更正须留痕，旧证据不得覆盖</Text>
       </Box>
     </Box>
     <Box ml="238px" flex="1" minW="0">
